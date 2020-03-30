@@ -1,5 +1,5 @@
 # Covid-19 Telegram Bot
-Telegram bot compatible with Python 3.7. Webhooks with ngrok to Telegram bot message stream, conditional responses.
+Telegram bot to provide updates on covid 19.
 
 Currently under development - 4/13/2019
 
