@@ -1,7 +1,5 @@
 # Covid-19 Telegram Bot
-Telegram bot to provide updates on covid 19.
-
-Currently under development - 4/13/2019
+Telegram bot to provide updates on COVID-19.
 
 ## To run:
 1. Download ngrok into the project root directory: https://ngrok.com/download
