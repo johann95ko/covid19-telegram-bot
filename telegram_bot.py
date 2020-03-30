@@ -1,5 +1,6 @@
 import requests
-
+from datetime import datetime
+from pytz import timezone
 from config import TELEGRAM_SEND_MESSAGE_URL
 
 class TelegramBot:
@@ -30,11 +31,9 @@ class TelegramBot:
         """
 
         message = data['message']
-
         self.chat_id = message['chat']['id']
         self.incoming_message_text = message['text'].lower()
         self.first_name = message['from']['first_name']
-        self.last_name = message['from']['last_name']
 
 
     def action(self):
@@ -47,13 +46,30 @@ class TelegramBot:
 
         success = None
 
-        if self.incoming_message_text == '/hello':
-            self.outgoing_message_text = "Hello {} {}!".format(self.first_name, self.last_name)
+        if self.incoming_message_text == '/singapore':
+            res = requests.get("https://corona.lmao.ninja/countries/sg")
+            response_data = res.json()
+            
+            localtz = timezone('Asia/Singapore')
+            t = str(response_data["updated"])[:10] + "." + str(response_data["updated"])[10:]
+            dt_unware = datetime.utcfromtimestamp(float(t))
+            dt_aware = localtz.localize(dt_unware).strftime('%d %b %Y (%a) %H:%M:%S')
+            
+            self.outgoing_message_text = "Hi {}!\n\nSingapore has {} total case(s) and is seeing {} new case(s) today.\n\nActive cases: {}\nDeaths today: {}\nCritical: {}\nRecovered: {}\n\n\nLast updated {}"\
+                                            .format(self.first_name,\
+                                            response_data["cases"],\
+                                            response_data["todayCases"],\
+                                            response_data["active"],\
+                                            response_data["deaths"],\
+                                            response_data["critical"],\
+                                            response_data["recovered"],\
+                                            dt_aware 
+)
             success = self.send_message()
         
-        if self.incoming_message_text == '/rad':
-            self.outgoing_message_text = '🤙'
-            success = self.send_message()
+        # if self.incoming_message_text == '/rad':
+        #     self.outgoing_message_text = '🤙'
+        #     success = self.send_message()
         
         return success
 

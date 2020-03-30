@@ -16,9 +16,3 @@ def index():
 
 if __name__ == '__main__':
     app.run(port=5000)
-
-
-# https://telegram.me
-
-# check bot initialization: https://api.telegram.org/bot<822448732:AAGUNRBnPPHjVhOqySQZk_QzP_VaZhgx9i0>/getme
-# check webhook url: https://api.telegram.org/bot822448732:AAGUNRBnPPHjVhOqySQZk_QzP_VaZhgx9i0/getWebhookInfo
