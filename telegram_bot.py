@@ -1,4 +1,6 @@
 import requests
+import re
+
 from datetime import datetime
 from pytz import timezone
 from config import TELEGRAM_SEND_MESSAGE_URL
@@ -45,32 +47,40 @@ class TelegramBot:
         """
 
         success = None
+        if self.incoming_message_text == "/start":
+            self.outgoing_message_text = "Hey {}, let\'s get started!\n\nType /AnyCountryName into the chat to get COVID-19 information on that country. (e.g /Singapore, or /singapore or /Sg)".format(self.first_name)
+            success = self.send_message()
 
-        if self.incoming_message_text == '/singapore':
-            res = requests.get("https://corona.lmao.ninja/countries/sg")
+        elif self.incoming_message_text == "/help":
+            self.outgoing_message_text = 'Type /AnyCountryName into the chat to get COVID-19 information on that country. (e.g /Singapore, or /singapore or /Sg)'
+            success = self.send_message()
+
+        elif re.match(r"^\/[a-zA-Z]+$", self.incoming_message_text) is not None:
+            countryName = str(self.incoming_message_text).strip('/')
+            res = requests.get('https://corona.lmao.ninja/countries/'+ countryName) 
             response_data = res.json()
             
-            localtz = timezone('Asia/Singapore')
-            t = str(response_data["updated"])[:10] + "." + str(response_data["updated"])[10:]
-            dt_unware = datetime.utcfromtimestamp(float(t))
-            dt_aware = localtz.localize(dt_unware).strftime('%d %b %Y (%a) %H:%M:%S')
-            
-            self.outgoing_message_text = "Hi {}!\n\nSingapore has {} total case(s) and is seeing {} new case(s) today.\n\nActive cases: {}\nDeaths today: {}\nCritical: {}\nRecovered: {}\n\n\nLast updated {}"\
+            try:
+                localtz = timezone('Asia/Singapore')
+                t = str(response_data["updated"])[:10] + "." + str(response_data["updated"])[10:]
+                dt_unaware = datetime.utcfromtimestamp(float(t))
+                dt_aware = localtz.localize(dt_unaware).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
+                
+                self.outgoing_message_text = "Hi {}!\n\n{} has {} total case(s) and is seeing {} new case(s) today.\n\nActive cases: {}\nDeaths today: {}\nCritical: {}\nRecovered: {}\n\n\nLast updated {}" \
                                             .format(self.first_name,\
+                                            response_data["country"],\
                                             response_data["cases"],\
                                             response_data["todayCases"],\
                                             response_data["active"],\
                                             response_data["deaths"],\
                                             response_data["critical"],\
                                             response_data["recovered"],\
-                                            dt_aware 
-)
-            success = self.send_message()
-        
-        # if self.incoming_message_text == '/rad':
-        #     self.outgoing_message_text = '🤙'
-        #     success = self.send_message()
-        
+                                            dt_aware)
+                success = self.send_message()   
+
+            except:
+                self.outgoing_message_text = response_data["message"]
+                success = self.send_message()     
         return success
 
 
