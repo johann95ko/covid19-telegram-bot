@@ -54,6 +54,24 @@ class TelegramBot:
         elif self.incoming_message_text == "/help":
             self.outgoing_message_text = 'Type /AnyCountryName into the chat to get COVID-19 information on that country. (e.g /Singapore, or /singapore or /Sg)'
             success = self.send_message()
+        
+        elif self.incoming_message_text == "/all":
+            res = requests.get('https://corona.lmao.ninja/all')
+            response_data = res.json()
+            
+            localtz = timezone('Asia/Singapore')
+            t = str(response_data["updated"])[:10] + "." + str(response_data["updated"])[10:]
+            dt_unaware = datetime.utcfromtimestamp(float(t))
+            dt_aware = localtz.localize(dt_unaware).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
+            
+            self.outgoing_message_text = "There are {} cases globally, with {} active today.\n\nRecovered: {}\nTotal deaths: {}\n\n\nLast updated {}" \
+                                        .format(response_data["cases"],\
+                                        response_data["active"],\
+                                        response_data["deaths"],\
+                                        response_data["recovered"],\
+                                        dt_aware)
+           
+            success = self.send_message()
 
         elif re.match(r"^\/[a-zA-Z]+$", self.incoming_message_text) is not None:
             countryName = str(self.incoming_message_text).strip('/')
