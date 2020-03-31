@@ -48,11 +48,11 @@ class TelegramBot:
 
         success = None
         if self.incoming_message_text == "/start":
-            self.outgoing_message_text = "Hey {}, let\'s get started!\n\nType /AnyCountryName into the chat to get COVID-19 information on that country. (e.g /Singapore, or /singapore or /Sg)".format(self.first_name)
+            self.outgoing_message_text = "Hey {}, let\'s get started!\n\nType /AnyCountryName into the chat to get COVID-19 information on that country (e.g /Singapore, or /singapore or /Sg) or type /all to get global statistics".format(self.first_name)
             success = self.send_message()
 
         elif self.incoming_message_text == "/help":
-            self.outgoing_message_text = 'Type /AnyCountryName into the chat to get COVID-19 information on that country. (e.g /Singapore, or /singapore or /Sg)'
+            self.outgoing_message_text = 'Type /AnyCountryName into the chat to get COVID-19 information on that country (e.g /Singapore, or /singapore or /Sg) or type /all to get global statistics'
             success = self.send_message()
         
         elif self.incoming_message_text == "/all":
@@ -62,7 +62,7 @@ class TelegramBot:
             localtz = timezone('Asia/Singapore')
             t = str(response_data["updated"])[:10] + "." + str(response_data["updated"])[10:]
             dt_unaware = datetime.utcfromtimestamp(float(t))
-            dt_aware = localtz.localize(dt_unaware).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
+            dt_aware = dt_unaware.astimezone(localtz).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
             
             self.outgoing_message_text = "Hey {}!\n\nThere are {} cases globally, with {} active today.\n\nRecovered: {}\nTotal deaths: {}\n\n\nLast updated {}" \
                                         .format(self.first_name,\
