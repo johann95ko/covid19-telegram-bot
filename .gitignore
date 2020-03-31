@@ -113,3 +113,6 @@ src/config.py
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+# ngrok
+ngrok.exe
