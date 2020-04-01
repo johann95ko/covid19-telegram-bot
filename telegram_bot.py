@@ -85,13 +85,14 @@ class TelegramBot:
                 dt_unaware = datetime.utcfromtimestamp(float(t))
                 dt_aware = dt_unaware.astimezone(localtz).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
                 
-                self.outgoing_message_text = "Hi {}!\n\n{} has a total of {} case(s), with {} new case(s) reported today.\n\nActive cases: {}\nDeaths today: {}\nCritical: {}\nRecovered: {}\n\n\nLast updated {}" \
+                self.outgoing_message_text = "Hi {}!\n\n{} has a total of {} case(s), with {} new case(s) reported today.\n\nActive cases: {}\nDeaths today: {}\nTotal deaths: {}\nCritical: {}\nRecovered: {}\n\n\nLast updated {}" \
                                             .format(self.first_name,\
                                             response_data["country"],\
                                             response_data["cases"],\
                                             response_data["todayCases"],\
                                             response_data["active"],\
                                             response_data["todayDeaths"],\
+                                            response_data["deaths"],\
                                             response_data["critical"],\
                                             response_data["recovered"],\
                                             dt_aware)
