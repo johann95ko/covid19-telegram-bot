@@ -83,7 +83,7 @@ class TelegramBot:
                 localtz = timezone('Asia/Singapore')
                 t = str(response_data["updated"])[:10] + "." + str(response_data["updated"])[10:]
                 dt_unaware = datetime.utcfromtimestamp(float(t))
-                dt_aware = localtz.localize(dt_unaware).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
+                dt_aware = dt_unaware.astimezone(localtz).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
                 
                 self.outgoing_message_text = "Hi {}!\n\n{} has a total of {} case(s), with {} new case(s) reported today.\n\nActive cases: {}\nDeaths today: {}\nCritical: {}\nRecovered: {}\n\n\nLast updated {}" \
                                             .format(self.first_name,\
