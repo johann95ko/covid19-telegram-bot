@@ -68,7 +68,8 @@ class TelegramBot:
                                         .format(self.first_name,\
                                         response_data["cases"],\
                                         response_data["active"],\
-                                        response_data["recovered"],response_data["deaths"],\
+                                        response_data["recovered"],\
+                                        response_data["deaths"],\
                                         dt_aware)
            
             success = self.send_message()
