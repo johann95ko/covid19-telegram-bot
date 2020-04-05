@@ -66,10 +66,10 @@ class TelegramBot:
             
             self.outgoing_message_text = "Hey {}!\n\nThere are {} cases globally, with {} active today.\n\nRecovered: {}\nTotal deaths: {}\n\n\nLast updated {}" \
                                         .format(self.first_name,\
-                                        response_data["cases"],\
-                                        response_data["active"],\
-                                        response_data["recovered"],\
-                                        response_data["deaths"],\
+                                        f"{response_data['cases']:,}",\
+                                        f"{response_data['active']:,}",\
+                                        f"{response_data['recovered']:,}",\
+                                        f"{response_data['deaths']:,}",\
                                         dt_aware)
            
             success = self.send_message()
@@ -88,13 +88,13 @@ class TelegramBot:
                 self.outgoing_message_text = "Hi {}!\n\n{} has a total of {} case(s), with {} new case(s) reported today.\n\nActive cases: {}\nDeaths today: {}\nTotal deaths: {}\nCritical: {}\nRecovered: {}\n\n\nLast updated {}" \
                                             .format(self.first_name,\
                                             response_data["country"],\
-                                            response_data["cases"],\
-                                            response_data["todayCases"],\
-                                            response_data["active"],\
-                                            response_data["todayDeaths"],\
-                                            response_data["deaths"],\
-                                            response_data["critical"],\
-                                            response_data["recovered"],\
+                                            f"{response_data['cases']:,}",\
+                                            f"{response_data['todayCases']:,}",\
+                                            f"{response_data['active']:,}",\
+                                            f"{response_data['todayDeaths']:,}",\
+                                            f"{response_data['deaths']:,}",\
+                                            f"{response_data['critical']:,}",\
+                                            f"{response_data['recovered']:,}",\
                                             dt_aware)
                 success = self.send_message()   
 
