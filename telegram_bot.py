@@ -48,9 +48,6 @@ class TelegramBot:
 
         success = None
 
- 
-
-        
         # Commands
         if self.incoming_message_text == "/start":
             self.outgoing_message_text = "Hey {}, let\'s get started!\n\nType /AnyCountryName into the chat to get COVID-19 information on that country (e.g /Singapore, or /singapore or /Sg) or type /all to get global statistics".format(self.first_name)
@@ -120,11 +117,14 @@ class TelegramBot:
 
             for word in sentence.split():
                 if word.lower() in GREETING_INPUTS:
-                    return success =  random.choice(GREETING_RESPONSES)
+                    success =  random.choice(GREETING_RESPONSES)
+                    break
                 if word.lower() in GRATITUDE_INPUTS:
-                    return success = random.choice(GRATITUDE_RESPONSES)
+                    success = random.choice(GRATITUDE_RESPONSES)
+                    break
                 if word.lower() in FAREWELL_INPUTS:
-                    return success = random.choice(FAREWELL_RESPONSES)
+                    success = random.choice(FAREWELL_RESPONSES)
+                    break
 
         return success
 
