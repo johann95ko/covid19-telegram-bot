@@ -47,6 +47,11 @@ class TelegramBot:
         """
 
         success = None
+
+ 
+
+        
+        # Commands
         if self.incoming_message_text == "/start":
             self.outgoing_message_text = "Hey {}, let\'s get started!\n\nType /AnyCountryName into the chat to get COVID-19 information on that country (e.g /Singapore, or /singapore or /Sg) or type /all to get global statistics".format(self.first_name)
             success = self.send_message()
@@ -101,6 +106,26 @@ class TelegramBot:
             except:
                 self.outgoing_message_text = response_data["message"]
                 success = self.send_message()     
+        
+        # Keyword Matching
+        if re.match(r"^[a-zA-Z]+$", self.incoming_message_text) is not None:     
+            GREETING_INPUTS = ("hello", "hi", "greetings", "sup", "what's up","hey",)
+            GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
+            GRATITUDE_INPUTS = ('thanks', 'thank you', 'thank', 'thank you')
+            GRATITUDE_RESPONSES = ('You\'re welcome!', 'No problem', 'Of course! See you again :)', 'My pleasure!')
+            FAREWELL_INPUTS = ('bye', 'see you', 'good day', 'byebye', 'sayonara', 'g\'day')
+            FAREWELL_RESPONSES = ('Bye!', 'Bye! take care....', 'Take care!', 'See you soon...', 'good day, mate :)', 'Adios...')
+            
+            sentence = str(self.incoming_message_text).lower()
+
+            for word in sentence.split():
+                if word.lower() in GREETING_INPUTS:
+                    return success =  random.choice(GREETING_RESPONSES)
+                if word.lower() in GRATITUDE_INPUTS:
+                    return success = random.choice(GRATITUDE_RESPONSES)
+                if word.lower() in FAREWELL_INPUTS:
+                    return success = random.choice(FAREWELL_RESPONSES)
+
         return success
 
 
