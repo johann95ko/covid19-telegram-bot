@@ -118,13 +118,16 @@ class TelegramBot:
 
             for word in sentence.split():
                 if word.lower() in GREETING_INPUTS:
-                    success =  random.choice(GREETING_RESPONSES)
+                    self.outgoing_message_text =  random.choice(GREETING_RESPONSES)
+                    success = self.send_message()  
                     break
                 if word.lower() in GRATITUDE_INPUTS:
-                    success = random.choice(GRATITUDE_RESPONSES)
+                    self.outgoing_message_text = random.choice(GRATITUDE_RESPONSES)
+                    success = self.send_message()  
                     break
                 if word.lower() in FAREWELL_INPUTS:
-                    success = random.choice(FAREWELL_RESPONSES)
+                    self.outgoing_message_text = random.choice(FAREWELL_RESPONSES)
+                    success = self.send_message()  
                     break
 
         return success
