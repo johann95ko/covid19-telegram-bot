@@ -112,7 +112,7 @@ class TelegramBot:
             GRATITUDE_INPUTS = ('thanks', 'thank you', 'thank', 'thank you')
             GRATITUDE_RESPONSES = ('You\'re welcome!', 'No problem', 'Of course! See you again :)', 'My pleasure!')
             FAREWELL_INPUTS = ('bye', 'see you', 'good day', 'byebye', 'sayonara', 'g\'day', 'adios')
-            FAREWELL_RESPONSES = ('Bye!', 'Bye! take care....', 'Take care!', 'See you soon...', 'good day, mate :)', 'Adios...')
+            FAREWELL_RESPONSES = ('Bye!', 'Bye! take care....', 'Take care!', 'See you soon...', 'good day, mate :)', 'Adios...', '*Bloop Bloop* Ciao!')
             
             sentence = str(self.incoming_message_text).lower()
             
