@@ -106,7 +106,7 @@ class TelegramBot:
                 success = self.send_message()     
         
         # Keyword Matching
-        if re.match(r"^[A-Za-z,;'\"\\s]+$", self.incoming_message_text) is not None:     
+        if re.match(r"^[a-zA-Z].*?[\.!?]$", self.incoming_message_text) is not None:     
             GREETING_INPUTS = ("hello", "hi", "greetings", "sup", "what's up","hey",)
             GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
             GRATITUDE_INPUTS = ('thanks', 'thank you', 'thank', 'thank you')
