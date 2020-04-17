@@ -67,7 +67,7 @@ class TelegramBot:
             dt_unaware = datetime.utcfromtimestamp(float(t))
             dt_aware = dt_unaware.astimezone(localtz).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
             
-            self.outgoing_message_text = "Hey {}!\n\nThere are {} cases globally in {} affected countries. {} cases are active today.\n\nRecovered: {}\nTotal deaths: {}\nCases per one million: {}\nDeaths per one million: {}\nTests per one million: {}\n\n\nLast updated {}" \
+            self.outgoing_message_text = "Hey {}!\n\nThere are {} cases globally in {} affected countries.\n{} cases are active today.\n\nRecovered: {}\nTotal deaths: {}\nCases per one million: {}\nDeaths per one million: {}\nTests per one million: {}\n\n\nLast updated {}" \
                                         .format(self.first_name,\
                                         f"{response_data['cases']:,}",\
                                         f"{response_data['affectedCountries']:,}",\
@@ -83,7 +83,7 @@ class TelegramBot:
 
         elif re.match(r"^\/[a-zA-Z]+$", self.incoming_message_text) is not None:
             countryName = str(self.incoming_message_text).strip('/')
-            res = requests.get('https://corona.lmao.ninja/countries/'+ countryName) 
+            res = requests.get('https://corona.lmao.ninja/v2/countries/'+ countryName) 
             response_data = res.json()
             
             try:
