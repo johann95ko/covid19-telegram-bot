@@ -59,7 +59,7 @@ class TelegramBot:
             success = self.send_message()
         
         elif self.incoming_message_text == "/all":
-            res = requests.get('https://corona.lmao.ninja/all')
+            res = requests.get('https://corona.lmao.ninja/v2/all')
             response_data = res.json()
             
             localtz = timezone('Asia/Singapore')
@@ -67,12 +67,16 @@ class TelegramBot:
             dt_unaware = datetime.utcfromtimestamp(float(t))
             dt_aware = dt_unaware.astimezone(localtz).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
             
-            self.outgoing_message_text = "Hey {}!\n\nThere are {} cases globally, with {} active today.\n\nRecovered: {}\nTotal deaths: {}\n\n\nLast updated {}" \
+            self.outgoing_message_text = "Hey {}!\n\nThere are {} cases globally in {} affected countries. {} cases are active today.\n\nRecovered: {}\nTotal deaths: {}\nCases per one million: {}\nDeaths per one million: {}\nTests per one million: {}\n\n\nLast updated {}" \
                                         .format(self.first_name,\
                                         f"{response_data['cases']:,}",\
+                                        f"{response_data['affectedCountries']:,}",\
                                         f"{response_data['active']:,}",\
                                         f"{response_data['recovered']:,}",\
                                         f"{response_data['deaths']:,}",\
+                                        f"{response_data['casesPerOneMillion']:,}",\
+                                        f"{response_data['deathsPerOneMillion']:,}",\
+                                        f"{response_data['testsPerOneMillion']:,}",\
                                         dt_aware)
            
             success = self.send_message()
@@ -88,16 +92,18 @@ class TelegramBot:
                 dt_unaware = datetime.utcfromtimestamp(float(t))
                 dt_aware = dt_unaware.astimezone(localtz).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
                 
-                self.outgoing_message_text = "Hi {}!\n\n{} has a total of {} case(s), with {} new case(s) reported today.\n\nActive cases: {}\nDeaths today: {}\nTotal deaths: {}\nCritical: {}\nRecovered: {}\n\n\nLast updated {}" \
+                self.outgoing_message_text = "Hi {}!\n\n{} has a total of {} case(s), with {} new case(s) reported today.\n\nActive cases: {}\nDeaths today: {}\nTotal deaths: {}\nCritical: {}\nRecovered: {}\nTotal tests performed: {}\nTests per one million: {}\n\n\nLast updated {}" \
                                             .format(self.first_name,\
-                                            response_data["country"],\
-                                            f"{response_data['cases']:,}",\
-                                            f"{response_data['todayCases']:,}",\
-                                            f"{response_data['active']:,}",\
-                                            f"{response_data['todayDeaths']:,}",\
-                                            f"{response_data['deaths']:,}",\
-                                            f"{response_data['critical']:,}",\
-                                            f"{response_data['recovered']:,}",\
+                                            response_data['country'],\
+                                            f"{response_data['countryInfo']['cases']:,}",\
+                                            f"{response_data['countryInfo']['todayCases']:,}",\
+                                            f"{response_data['countryInfo']['active']:,}",\
+                                            f"{response_data['countryInfo']['todayDeaths']:,}",\
+                                            f"{response_data['countryInfo']['deaths']:,}",\
+                                            f"{response_data['countryInfo']['critical']:,}",\
+                                            f"{response_data['countryInfo']['tests']:,}",\
+                                            f"{response_data['countryInfo']['testsPerOneMillion']:,}",\
+                                            f"{response_data['countryInfo']['recovered']:,}",\
                                             dt_aware)
                 success = self.send_message()   
 
