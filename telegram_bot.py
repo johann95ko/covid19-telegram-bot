@@ -95,15 +95,15 @@ class TelegramBot:
                 self.outgoing_message_text = "Hi {}!\n\n{} has a total of {} case(s), with {} new case(s) reported today.\n\nActive cases: {}\nDeaths today: {}\nTotal deaths: {}\nCritical: {}\nRecovered: {}\nTotal tests performed: {}\nTests per one million: {}\n\n\nLast updated {}" \
                                             .format(self.first_name,\
                                             response_data['country'],\
-                                            f"{response_data['countryInfo']['cases']:,}",\
-                                            f"{response_data['countryInfo']['todayCases']:,}",\
-                                            f"{response_data['countryInfo']['active']:,}",\
-                                            f"{response_data['countryInfo']['todayDeaths']:,}",\
-                                            f"{response_data['countryInfo']['deaths']:,}",\
-                                            f"{response_data['countryInfo']['critical']:,}",\
-                                            f"{response_data['countryInfo']['tests']:,}",\
-                                            f"{response_data['countryInfo']['testsPerOneMillion']:,}",\
-                                            f"{response_data['countryInfo']['recovered']:,}",\
+                                            f"{response_data['cases']:,}",\
+                                            f"{response_data['todayCases']:,}",\
+                                            f"{response_data['active']:,}",\
+                                            f"{response_data['todayDeaths']:,}",\
+                                            f"{response_data['deaths']:,}",\
+                                            f"{response_data['critical']:,}",\
+                                            f"{response_data['tests']:,}",\
+                                            f"{response_data['testsPerOneMillion']:,}",\
+                                            f"{response_data['recovered']:,}",\
                                             dt_aware)
                 success = self.send_message()   
 
