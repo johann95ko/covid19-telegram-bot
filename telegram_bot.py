@@ -146,7 +146,7 @@ class TelegramBot:
         Sends message to Telegram servers.
         """
 
-        res = requests.get(TELEGRAM_SEND_MESSAGE_URL.format(chat_id=self.chat_id, text=self.outgoing_message_text, parse_mode=telegram.ParseMode.MARKDOWN_V2))
+        res = requests.get(TELEGRAM_SEND_MESSAGE_URL.format(self.chat_id, self.outgoing_message_text, 'telegram.ParseMode.MARKDOWN_V2'))
 
         return True if res.status_code == 200 else False
     
