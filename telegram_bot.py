@@ -101,9 +101,9 @@ class TelegramBot:
                                             f"{response_data['todayDeaths']:,}",\
                                             f"{response_data['deaths']:,}",\
                                             f"{response_data['critical']:,}",\
+                                            f"{response_data['recovered']:,}",\
                                             f"{response_data['tests']:,}",\
                                             f"{response_data['testsPerOneMillion']:,}",\
-                                            f"{response_data['recovered']:,}",\
                                             dt_aware)
                 success = self.send_message()   
 
