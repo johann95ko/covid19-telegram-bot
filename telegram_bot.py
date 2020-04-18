@@ -58,6 +58,7 @@ class TelegramBot:
             self.outgoing_message_text = 'Type /AnyCountryName into the chat to get COVID-19 information on that country (e.g /Singapore, or /singapore or /Sg) or type /all to get global statistics'
             success = self.send_message()
         
+        # Global stats
         elif self.incoming_message_text == "/all":
             res = requests.get('https://corona.lmao.ninja/v2/all')
             response_data = res.json()
@@ -83,8 +84,7 @@ class TelegramBot:
 
         # Special case for South korea due to API limitation
         SOUTH_KOREA_NAMES = ['korea', 'south_korea', 'skorea', 'kor', 'southkorea']
-        elif self.incoming_message_text in SOUTH_KOREA_NAMES:
-            countryName = str(self.incoming_message_text).strip('/')
+        elif str(self.incoming_message_text) in SOUTH_KOREA_NAMES:
             res = requests.get('https://corona.lmao.ninja/v2/countries/south%20korea') 
             response_data = res.json()
             
@@ -109,6 +109,7 @@ class TelegramBot:
                                             dt_aware)
                 success = self.send_message()   
 
+        # All other countries
         elif re.match(r"^\/[a-zA-Z]+$", self.incoming_message_text) is not None:
             countryName = str(self.incoming_message_text).strip('/')
             res = requests.get('https://corona.lmao.ninja/v2/countries/'+ countryName) 
