@@ -46,9 +46,9 @@ class TelegramBot:
         Returns:
             bool: True if the action was completed successfully else false
         """
-
+        SOUTH_KOREA_NAMES = ['korea', 'south_korea', 'skorea', 'kor', 'southkorea']
         success = None
-
+        
         # Commands
         if self.incoming_message_text == "/start":
             self.outgoing_message_text = "Hey {}, let\'s get started!\n\nType /AnyCountryName into the chat to get COVID-19 information on that country (e.g /Singapore, or /singapore or /Sg) or type /all to get global statistics".format(self.first_name)
@@ -83,7 +83,6 @@ class TelegramBot:
             success = self.send_message()
 
         # Special case for South korea due to API limitation
-        SOUTH_KOREA_NAMES = ['korea', 'south_korea', 'skorea', 'kor', 'southkorea']
         elif (str(self.incoming_message_text) in SOUTH_KOREA_NAMES):
             res = requests.get('https://corona.lmao.ninja/v2/countries/south%20korea') 
             response_data = res.json()
