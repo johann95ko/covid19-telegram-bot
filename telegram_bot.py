@@ -83,7 +83,7 @@ class TelegramBot:
             success = self.send_message()
 
         # Special case for South korea due to API limitation
-        elif (str(self.incoming_message_text) in SOUTH_KOREA_NAMES):
+        elif (str(self.incoming_message_text).strip('/') in SOUTH_KOREA_NAMES):
             res = requests.get('https://corona.lmao.ninja/v2/countries/south%20korea') 
             response_data = res.json()
             
