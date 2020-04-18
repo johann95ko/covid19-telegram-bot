@@ -81,6 +81,34 @@ class TelegramBot:
            
             success = self.send_message()
 
+        # Special case for South korea due to API limitation
+        SOUTH_KOREA_NAMES = ['korea', 'south_korea', 'skorea', 'kor', 'southkorea']
+        elif self.incoming_message_text is in SOUTH_KOREA_NAMES:
+            countryName = str(self.incoming_message_text).strip('/')
+            res = requests.get('https://corona.lmao.ninja/v2/countries/south%20korea') 
+            response_data = res.json()
+            
+            try:
+                localtz = timezone('Asia/Singapore')
+                t = str(response_data["updated"])[:10] + "." + str(response_data["updated"])[10:]
+                dt_unaware = datetime.utcfromtimestamp(float(t))
+                dt_aware = dt_unaware.astimezone(localtz).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
+                
+                self.outgoing_message_text = "Hi {}!\n\n{} has a total of *{}* case(s), with *{}* new case(s) reported today.\n\nActive cases: {}\nDeaths today: {}\nTotal deaths: {}\nCritical: {}\nRecovered: {}\nTotal tests performed: {}\nTests per one million: {}\n\n\n_Last updated {}_" \
+                                            .format(self.first_name,\
+                                            response_data['country'],\
+                                            f"{response_data['cases']:,}",\
+                                            f"{response_data['todayCases']:,}",\
+                                            f"{response_data['active']:,}",\
+                                            f"{response_data['todayDeaths']:,}",\
+                                            f"{response_data['deaths']:,}",\
+                                            f"{response_data['critical']:,}",\
+                                            f"{response_data['recovered']:,}",\
+                                            f"{response_data['tests']:,}",\
+                                            f"{response_data['testsPerOneMillion']:,}",\
+                                            dt_aware)
+                success = self.send_message()   
+
         elif re.match(r"^\/[a-zA-Z]+$", self.incoming_message_text) is not None:
             countryName = str(self.incoming_message_text).strip('/')
             res = requests.get('https://corona.lmao.ninja/v2/countries/'+ countryName) 
