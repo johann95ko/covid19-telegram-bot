@@ -108,6 +108,10 @@ class TelegramBot:
                                             f"{response_data['testsPerOneMillion']:,}",\
                                             dt_aware)
                 success = self.send_message()   
+            
+            except:
+                self.outgoing_message_text = response_data["message"]
+                success = self.send_message()  
 
         # All other countries
         elif re.match(r"^\/[a-zA-Z]+$", self.incoming_message_text) is not None:
