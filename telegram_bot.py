@@ -83,7 +83,7 @@ class TelegramBot:
 
         # Special case for South korea due to API limitation
         SOUTH_KOREA_NAMES = ['korea', 'south_korea', 'skorea', 'kor', 'southkorea']
-        elif self.incoming_message_text is in SOUTH_KOREA_NAMES:
+        elif self.incoming_message_text in SOUTH_KOREA_NAMES:
             countryName = str(self.incoming_message_text).strip('/')
             res = requests.get('https://corona.lmao.ninja/v2/countries/south%20korea') 
             response_data = res.json()
