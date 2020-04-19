@@ -38,7 +38,7 @@ class TelegramBot:
             self.incoming_message_text = message['text'].lower()
             self.first_name = message['from']['first_name']
         except:
-            print("Message not found")
+            raise ValueError('Message is empty')
 
 
 

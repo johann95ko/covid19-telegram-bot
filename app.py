@@ -15,7 +15,7 @@ def index():
         success = bot.action()
         return jsonify(success=success) # TODO: Success should reflect the success of the reply
     except:
-        return jsonify(success="")
+        return jsonify(success="500")
 
 if __name__ == '__main__':
     app.run(port=5000)
