@@ -10,9 +10,12 @@ TelegramBot.init_webhook(TELEGRAM_INIT_WEBHOOK_URL)
 def index():
     req = request.get_json()
     bot = TelegramBot()
-    bot.parse_webhook_data(req)
-    success = bot.action()
-    return jsonify(success=success) # TODO: Success should reflect the success of the reply
+    try:
+        bot.parse_webhook_data(req)
+        success = bot.action()
+        return jsonify(success=success) # TODO: Success should reflect the success of the reply
+    except:
+        return jsonify(success="")
 
 if __name__ == '__main__':
     app.run(port=5000)
