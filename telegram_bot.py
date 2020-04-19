@@ -32,7 +32,7 @@ class TelegramBot:
         Args:
             data:str: JSON string of data
         """
-
+        print(data['message'])
         message = data['message']
         self.chat_id = message['chat']['id']
         self.incoming_message_text = message['text'].lower()
@@ -67,7 +67,7 @@ class TelegramBot:
             t = str(response_data["updated"])[:10] + "." + str(response_data["updated"])[10:]
             dt_unaware = datetime.utcfromtimestamp(float(t))
             dt_aware = dt_unaware.astimezone(localtz).strftime('%a, %d %b %Y  %H:%M:%S (SGT)')
-            
+            print(self.first_name)
             self.outgoing_message_text = "Hey {}!\n\nThere are *{}* cases globally in *{}* affected countries. *{}* of these cases are active today.\n\nRecovered: {}\nTotal deaths: {}\nCases per one million: {}\nDeaths per one million: {}\nTests per one million: {}\n\n\n_Last updated {}_" \
                                         .format(self.first_name,\
                                         f"{response_data['cases']:,}",\
