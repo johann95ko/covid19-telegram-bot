@@ -49,7 +49,7 @@ class TelegramBot:
         success = None
 
         # For logging access
-        print(str(self.first_name) + "called the bot")
+        print(str(self.first_name) + " called the bot")
 
         # Commands
         if self.incoming_message_text == "/start":
