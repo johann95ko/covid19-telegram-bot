@@ -32,10 +32,14 @@ class TelegramBot:
         Args:
             data:str: JSON string of data
         """
-        message = data['message']
-        self.chat_id = message['chat']['id']
-        self.incoming_message_text = message['text'].lower()
-        self.first_name = message['from']['first_name']
+        try:
+            message = data['message']
+            self.chat_id = message['chat']['id']
+            self.incoming_message_text = message['text'].lower()
+            self.first_name = message['from']['first_name']
+        except:
+            print("Message not found")
+
 
 
     def action(self):
