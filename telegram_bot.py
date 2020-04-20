@@ -21,6 +21,7 @@ class TelegramBot:
 
         self.chat_id = None
         self.text = None
+        self.username = None
         self.first_name = None
         self.last_name = None
 
@@ -34,6 +35,7 @@ class TelegramBot:
         """
         try:
             message = data['message']
+            print(message)
             self.chat_id = message['chat']['id']
             self.incoming_message_text = message['text'].lower()
             self.first_name = message['from']['first_name']
