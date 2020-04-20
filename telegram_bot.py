@@ -35,9 +35,9 @@ class TelegramBot:
         """
         try:
             message = data['message']
-            print(message)
             self.chat_id = message['chat']['id']
             self.incoming_message_text = message['text'].lower()
+            self.username = message['from']['username']
             self.first_name = message['from']['first_name']
         except:
             raise ValueError('Message is empty')
@@ -55,7 +55,7 @@ class TelegramBot:
         success = None
 
         # For logging access
-        print("Bot called: " + str(self.chat_id) + ", " + str(self.first_name) + ", " + str(self.incoming_message_text))
+        print("Bot called: " + str(self.chat_id) + ", " + str(self.first_name) + ", " + str(self.username) + ", " + str(self.incoming_message_text))
 
         # Commands
         if self.incoming_message_text == "/start":
